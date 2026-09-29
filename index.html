@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyvariant — samme lenke, ny variant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="paper-noise"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">N</span>
+      <span class="brand-name">Nyvariant</span>
+    </div>
+    <nav>
+      <a href="#how">Slik funker det</a>
+      <a href="#demo">Prøv</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Samme destinasjon · ny variant av siden</p>
+      <h1>
+        Lag en ny variant
+        <span class="hl">av lenka di</span>
+      </h1>
+      <p class="lede">
+        Lim inn en tilbudslenke. Nyvariant leser destinasjonen og bygger en forside rundt den.
+        Samme lenke. Ny variant.
+      </p>
+
+      <ol class="steps">
+        <li><span>1</span> Har du en lenke?</li>
+        <li><span>2</span> Lim den inn.</li>
+        <li><span>3</span> Få en ny variant.</li>
+      </ol>
+    </section>
+
+    <section id="demo" class="studio">
+      <div class="studio-card">
+        <label for="url">Lenke</label>
+        <div class="row">
+          <input
+            id="url"
+            type="url"
+            spellcheck="false"
+            placeholder="https://www.skool.com/… eller en produktlenke"
+            value="https://www.skool.com/salgsraketten/about"
+          />
+          <button id="build" type="button">Lag variant</button>
+        </div>
+        <p class="hint">
+          Fungerer best på produktsider, Skool-about og kurs. Kortlenker følges automatisk.
+        </p>
+
+        <div class="presets">
+          <span>Prøv:</span>
+          <button type="button" data-url="https://www.skool.com/salgsraketten/about">Salgsraketten</button>
+          <button type="button" data-url="https://www.notion.so">Notion</button>
+          <button type="button" data-url="https://www.apple.com/airpods-pro/">AirPods</button>
+          <button type="button" data-url="https://www.amazon.com/dp/B0D1XD1ZV3">Kindle</button>
+        </div>
+
+        <div id="status" class="status" hidden></div>
+      </div>
+
+      <aside class="sketch">
+        <div class="link-chip">
+          <span class="chain">⛓</span>
+          <div>
+            <small>Original lenke</small>
+            <code id="chip-url">https://www.skool.com/salgsraketten/about</code>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="mini-site">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="mini-hero"></div>
+          <strong>Ny variant av tilbudet</strong>
+          <button type="button" tabindex="-1">Se tilbudet →</button>
+          <div class="pills">
+            <span>Samme lenke</span>
+            <span>Ny forside</span>
+            <span>Din CTA</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <div class="result-bar">
+        <div>
+          <h2>Varianten er klar</h2>
+          <p id="result-meta">Bygd fra tilbudet på den andre siden av lenka.</p>
+        </div>
+        <div class="result-actions">
+          <button id="open-full" type="button">Åpne siden</button>
+          <button id="download" type="button" class="ghost">Last ned HTML</button>
+          <button id="again" type="button" class="ghost">Ny lenke</button>
+        </div>
+      </div>
+      <div class="browser">
+        <div class="browser-bar">
+          <span></span><span></span><span></span>
+          <div class="omnibox" id="omnibox">nyvariant / forhåndsvisning</div>
+        </div>
+        <iframe id="preview" title="Forhåndsvisning av ny variant"></iframe>
+      </div>
+    </section>
+
+    <section id="how" class="how">
+      <h2>Hva verktøyet faktisk gjør</h2>
+      <div class="grid">
+        <article>
+          <h3>Leser tilbudet</h3>
+          <p>Henter tittel, beskrivelse, bilde og domene fra destinasjonen — også via kortlenker.</p>
+        </article>
+        <article>
+          <h3>Skriver en variant</h3>
+          <p>Lager overskrift, pitch, punkter, FAQ og en knapp som peker på <em>din</em> originale URL.</p>
+        </article>
+        <article>
+          <h3>Ikke mer enn det</h3>
+          <p>Ingen hosting-magi og ingen «passiv inntekt». Bare en ny variant av lenka.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Nyvariant er et lite verktøy: lim inn en lenke, få en ny variant av forsiden. Åpen kildekode.</p>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
