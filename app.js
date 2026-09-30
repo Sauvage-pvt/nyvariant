@@ -74,18 +74,24 @@ async function buildSite() {
   buildBtn.disabled = true;
   setStatus("Leser tilbudet på den andre siden av lenka…");
 
-  const meta = await fetchMeta(href);
-  const page = inventPage(meta);
-  lastHtml = renderLanding(page);
-  lastName = page.product;
+  try {
+    const meta = await fetchMeta(href);
+    const page = inventPage(meta);
+    lastHtml = renderLanding(page);
+    lastName = page.product;
 
-  preview.srcdoc = lastHtml;
-  omnibox.textContent = page.domain.replace(/^www\./, "") + " · via nyvariant";
-  resultMeta.textContent = `${page.product} · ny variant fra ${page.domain}`;
-  result.hidden = false;
-  setStatus(`Lagde en ${page.angle}-variant for ${page.product}.`, true);
-  buildBtn.disabled = false;
-  result.scrollIntoView({ behavior: "smooth", block: "start" });
+    preview.srcdoc = lastHtml;
+    omnibox.textContent = page.domain.replace(/^www\./, "") + " · via nyvariant";
+    resultMeta.textContent = `${page.product} · ny variant fra ${page.domain}`;
+    result.hidden = false;
+    setStatus(`Lagde en ${page.angle}-variant for ${page.product}.`, true);
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) {
+    console.error(err);
+    setStatus("Klarte ikke å lage en variant av denne lenka. Prøv en annen.");
+  } finally {
+    buildBtn.disabled = false;
+  }
 }
 
 async function fetchMeta(url) {
@@ -402,13 +408,13 @@ function slugify(s) {
 
 function escapeHtml(s) {
   return String(s)
-    .replace(/&/g, "&")
-    .replace(/</g, "<")
-    .replace(/>/g, ">");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 function escapeAttr(s) {
-  return escapeHtml(s).replace(/"/g, """);
+  return escapeHtml(s).replace(/"/g, "&quot;");
 }
 
 function escapeReg(s) {
