@@ -13,7 +13,7 @@ let lastHtml = "";
 let lastName = "offer";
 
 urlInput.addEventListener("input", () => {
-  chipUrl.textContent = urlInput.value.trim() || "https://www.skool.com/salgsraketten/about";
+  chipUrl.textContent = urlInput.value.trim() || "Lim inn en lenke…";
 });
 
 document.querySelectorAll(".presets button").forEach((btn) => {
