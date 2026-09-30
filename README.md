@@ -19,7 +19,6 @@ Gå til [http://localhost:8080](http://localhost:8080).
 - `index.html` — verktøyet
 - `app.js` — henter metadata og skriver varianten
 - `styles.css` — UI
-- `eksempler/salgsraketten.html` — ferdig variant av en Skool-about
 
 ## GitHub Pages
 
