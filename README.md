@@ -17,16 +17,28 @@ Gå til [http://localhost:8080](http://localhost:8080).
 ## Filer
 
 - `index.html` — verktøyet
-- `app.js` — henter metadata og skriver varianten
+- `app.js` — UI-logikk for forsiden
+- `engine.js` — henter metadata og skriver varianten (delt med karusellen)
+- `carousel.html` / `carousel.js` — karusellsiden `/k/<slug>`, PNG-slides i 1080×1350
 - `styles.css` — UI
+- `src/worker.js` — Cloudflare Worker: statiske filer, `POST /api/carousel`, `GET /api/carousel/:slug`
+- `wrangler.toml` — Worker-konfig og KV-binding `CAROUSELS`
 
-## GitHub Pages
+## Cloudflare
 
-Repo → Settings → Pages → Source: **Deploy from a branch** → `main` / `/ (root)`.
+Verktøyet kjører som en Worker med statiske filer fra repoet.
 
-Da blir verktøyet tilgjengelig på:
+Første gang:
 
-https://sauvage-pvt.github.io/nyvariant/
+```bash
+npx wrangler kv namespace create CAROUSELS   # lim inn id-en i wrangler.toml
+npx wrangler deploy
+```
+
+Deploy skjer automatisk ved push til `main` via `.github/workflows/deploy.yml`.
+Krever repo-secrets `CLOUDFLARE_API_TOKEN` og `CLOUDFLARE_ACCOUNT_ID`.
+
+Lagres bare lenken. Karusellen bygges i nettleseren med samme motor som forsiden.
 
 ## Hva det ikke er
 

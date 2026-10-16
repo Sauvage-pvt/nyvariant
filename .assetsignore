@@ -1,0 +1,7 @@
+.git
+.github
+src
+wrangler.toml
+.assetsignore
+README.md
+LICENSE
