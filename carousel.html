@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Karusell — Nyvariant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css" />
+<style>
+  .carousel-page { width: min(1000px, calc(100% - 40px)); margin: 0 auto; padding: 16px 0 60px; }
+  .carousel-page h1 { font-size: clamp(40px, 7vw, 72px); max-width: 20ch; }
+  .carousel-page .lede { font-family: "Source Sans 3", system-ui, sans-serif; }
+  .slides { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin: 24px 0; }
+  .slides img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: var(--card); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 8px 0 28px; }
+  .actions button, .actions a { font: inherit; padding: 12px 18px; border-radius: 999px; border: 2px solid var(--ink); background: var(--yellow); color: var(--ink); text-decoration: none; cursor: pointer; }
+  .actions .ghost { background: transparent; }
+  .caption-block { display: grid; gap: 12px; }
+  .caption-block h2 { font-size: 22px; margin: 10px 0 0; }
+  .caption-block textarea { width: 100%; font: inherit; font-family: "Source Sans 3", system-ui, sans-serif; font-size: 17px; padding: 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--ink); resize: vertical; }
+  .caption-block pre { margin: 0; padding: 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); white-space: pre-wrap; font-family: "IBM Plex Mono", monospace; font-size: 15px; }
+  .error { color: var(--red); font-family: "Source Sans 3", system-ui, sans-serif; }
+</style>
+</head>
+<body>
+  <div class="paper-noise"></div>
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand-mark">N</span>
+      <span class="brand-name">Nyvariant</span>
+    </a>
+  </header>
+
+  <main class="carousel-page">
+    <p class="eyebrow" id="status">Lager karusell…</p>
+    <h1 id="title"></h1>
+    <p class="lede" id="source"></p>
+
+    <section class="slides" id="slides"></section>
+
+    <div class="actions">
+      <button id="download" type="button">Last ned ZIP (PNG + tekst)</button>
+      <a id="original" href="#" target="_blank" rel="nofollow sponsored noopener">Original lenke</a>
+    </div>
+
+    <section class="caption-block">
+      <h2>Caption</h2>
+      <textarea id="caption" rows="8"></textarea>
+      <button id="copy-caption" type="button" class="ghost">Kopier caption</button>
+
+      <h2>Hashtags</h2>
+      <pre><code id="hashtags"></code></pre>
+      <button id="copy-hashtags" type="button" class="ghost">Kopier hashtags</button>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="./engine.js"></script>
+  <script src="./carousel.js"></script>
+</body>
+</html>

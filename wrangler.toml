@@ -1,0 +1,17 @@
+name = "nyvariant"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+# Static site (index.html, styles.css, app.js, engine.js, carousel.*) is served from the repo root.
+# Files that should not be public are listed in .assetsignore.
+[assets]
+directory = "."
+binding = "ASSETS"
+run_worker_first = ["/k/*", "/api/*"]
+
+# One record per carousel link. Create with:
+#   npx wrangler kv namespace create CAROUSELS
+# then paste the returned id below.
+[[kv_namespaces]]
+binding = "CAROUSELS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
