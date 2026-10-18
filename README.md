@@ -20,6 +20,7 @@ Gå til [http://localhost:8080](http://localhost:8080).
 - `app.js` — UI-logikk for forsiden
 - `engine.js` — henter metadata og skriver varianten (delt med karusellen)
 - `carousel.html` / `carousel.js` — karusellsiden `/k/<slug>`, PNG-slides i 1080×1350
+- `kunde.html` / `kunde.js` — ny forside for en lokal bedrift: meta-beskrivelse, canonical, schema.org, FAQ, llms.txt, anmeldelseslenke, chat og bookinglenke (punktene fra dahl-ai-synlighet-test)
 - `styles.css` — UI
 - `src/worker.js` — Cloudflare Worker: statiske filer, `POST /api/carousel`, `GET /api/carousel/:slug`
 - `wrangler.toml` — Worker-konfig og KV-binding `CAROUSELS`
