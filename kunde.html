@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kundeside — Nyvariant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .kunde-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+    .kunde-form .full { grid-column: 1 / -1; }
+    .kunde-form label { margin-bottom: 6px; }
+    .kunde-form textarea {
+      width: 100%; min-height: 96px; resize: vertical;
+      border: 1.5px solid var(--ink); border-radius: 12px; padding: 12px 14px;
+      font: 14px/1.4 "IBM Plex Mono", monospace; background: #fff;
+    }
+    .kunde-form input, .kunde-form select { width: 100%; }
+    .kunde-form select { border: 1.5px solid var(--ink); border-radius: 12px; padding: 14px; font: 15px/1.3 "IBM Plex Mono", monospace; background: #fff; }
+    .kunde-form .days { display: flex; flex-wrap: wrap; gap: 6px; }
+    .kunde-form .days label {
+      display: inline-flex; align-items: center; gap: 4px; margin: 0;
+      border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 10px; background: #fff;
+      font-size: 12px; cursor: pointer;
+    }
+    .kunde-form .days input { width: auto; flex: none; padding: 0; }
+    .kunde-form .times { display: flex; gap: 10px; }
+    .actions-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .fixes { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; width: 100%; }
+    .fixes li {
+      display: grid; grid-template-columns: 24px 1fr; gap: 8px;
+      background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px;
+      font-size: 14px; line-height: 1.35;
+    }
+    .fixes li b { display: block; font-size: 15px; }
+    .fixes .ok { color: #2f6b3a; font-weight: 700; }
+    .fixes .miss { color: var(--red); font-weight: 700; }
+    .sketch h2 { font-family: "Instrument Serif", serif; font-size: 26px; margin: 0; justify-self: start; }
+    .sketch .sub { margin: 0; color: var(--muted); font-size: 14px; justify-self: start; }
+    .device-toggle { display: inline-flex; gap: 0; }
+    .device-toggle button { border-radius: 0; padding: 8px 12px; font-size: 14px; background: #fff; }
+    .device-toggle button:first-child { border-radius: 12px 0 0 12px; }
+    .device-toggle button:last-child { border-radius: 0 12px 12px 0; margin-left: -1.5px; }
+    .device-toggle button[aria-pressed="true"] { background: var(--yellow); }
+    .browser.mobile { max-width: 410px; margin: 0 auto; }
+    @media (max-width: 900px) { .kunde-form { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="paper-noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" style="text-decoration:none;color:inherit">
+      <span class="brand-mark">N</span>
+      <span class="brand-name">Nyvariant</span>
+    </a>
+    <nav>
+      <a href="./">Lenkevariant</a>
+      <a href="#bygg">Kundeside</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Lokal bedrift · ny versjon av forsiden</p>
+      <h1>
+        Ny versjon av
+        <span class="hl">kundens nettside</span>
+      </h1>
+      <p class="lede">
+        Fyll inn det du vet om kunden. Du får en forside med det som vanligvis mangler:
+        meta-beskrivelse, strukturerte data, FAQ, anmeldelser, chat og bookinglenke.
+        Prøv chatten rett i forhåndsvisningen.
+      </p>
+    </section>
+
+    <section id="bygg" class="studio">
+      <div class="studio-card">
+        <form id="kunde-form" class="kunde-form" autocomplete="off">
+          <div class="full">
+            <label for="siteUrl">Dagens nettside (valgfritt)</label>
+            <input id="siteUrl" type="url" spellcheck="false" placeholder="https://kunde.no — henter tittel, beskrivelse og bilde" />
+          </div>
+          <div>
+            <label for="name">Bedriftsnavn</label>
+            <input id="name" type="text" required />
+          </div>
+          <div>
+            <label for="kind">Bransje</label>
+            <select id="kind"></select>
+          </div>
+          <div>
+            <label for="city">Sted</label>
+            <input id="city" type="text" required />
+          </div>
+          <div>
+            <label for="address">Adresse</label>
+            <input id="address" type="text" />
+          </div>
+          <div>
+            <label for="phone">Telefon</label>
+            <input id="phone" type="tel" />
+          </div>
+          <div>
+            <label for="email">E-post</label>
+            <input id="email" type="email" />
+          </div>
+          <div class="full">
+            <label>Åpent</label>
+            <div class="days" id="days"></div>
+            <div class="times" style="margin-top:8px">
+              <input id="opens" type="time" value="09:00" aria-label="Åpner" />
+              <input id="closes" type="time" value="17:00" aria-label="Stenger" />
+            </div>
+          </div>
+          <div class="full">
+            <label for="services">Tjenester — navn | minutter | pris (en per linje)</label>
+            <textarea id="services" spellcheck="false"></textarea>
+          </div>
+          <div class="full">
+            <label for="bookingUrl">Bookinglenke</label>
+            <input id="bookingUrl" type="url" spellcheck="false" placeholder="https://cal.com/kunde eller kundens bookingsystem" />
+          </div>
+          <div class="full">
+            <label for="reviewUrl">Lenke til Google-anmeldelse</label>
+            <input id="reviewUrl" type="url" spellcheck="false" placeholder="Fra Google Business Profile → Få flere anmeldelser" />
+          </div>
+        </form>
+        <div class="actions-row">
+          <button id="build" type="button">Bygg ny versjon</button>
+          <button id="fill-demo" type="button" class="ghost">Fyll inn eksempel</button>
+        </div>
+        <p class="hint">Chatten i forhåndsvisningen er et regelstyrt utkast uten AI og uten server. Bookinger lagres bare i fanen. «Book på nett» går til lenka du legger inn.</p>
+        <div id="status" class="status" hidden></div>
+      </div>
+
+      <aside class="sketch">
+        <h2>Det som sjekkes</h2>
+        <p class="sub">Punktene kommer fra testene i dahl-ai-synlighet-test.</p>
+        <ul id="fixes" class="fixes">
+          <li><span class="miss">–</span><span>Bygg en versjon for å se hva som er med.</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <div class="result-bar">
+        <div>
+          <h2>Ny forside er klar</h2>
+          <p id="result-meta"></p>
+        </div>
+        <div class="result-actions">
+          <span class="device-toggle" role="group" aria-label="Visning">
+            <button type="button" id="view-desktop" aria-pressed="true">PC</button>
+            <button type="button" id="view-mobile" aria-pressed="false">Mobil</button>
+          </span>
+          <button id="open-full" type="button">Åpne siden</button>
+          <button id="download" type="button" class="ghost">Last ned HTML</button>
+          <button id="download-llms" type="button" class="ghost">Last ned llms.txt</button>
+        </div>
+      </div>
+      <div class="browser" id="browser">
+        <div class="browser-bar">
+          <span></span><span></span><span></span>
+          <div class="omnibox" id="omnibox">forhåndsvisning</div>
+        </div>
+        <iframe id="preview" title="Forhåndsvisning av kundens nye forside"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Utkast til forside. Kunden må godkjenne tekst, priser og åpningstider før noe publiseres.</p>
+  </footer>
+
+  <script src="./engine.js"></script>
+  <script src="./kunde.js"></script>
+</body>
+</html>
