@@ -124,6 +124,12 @@ function readForm() {
   };
 }
 
+// slugify() fjerner æ, ø og å, så de byttes ut først.
+function nameSlug(name) {
+  const map = { æ: "ae", ø: "o", å: "a" };
+  return slugify(name.toLowerCase().replace(/[æøå]/g, (c) => map[c]));
+}
+
 function httpUrl(raw) {
   if (!raw) return "";
   try {
@@ -208,10 +214,10 @@ async function buildSite() {
   const built = buildCustomerSite(cfg);
   lastHtml = built.html;
   lastLlms = built.llms;
-  lastSlug = slugify(cfg.name);
+  lastSlug = nameSlug(cfg.name);
 
   preview.srcdoc = lastHtml;
-  $("omnibox").textContent = (siteUrl ? hostname(siteUrl).replace(/^www\./, "") : slugify(cfg.name)) + " · ny forside";
+  $("omnibox").textContent = (siteUrl ? hostname(siteUrl).replace(/^www\./, "") : nameSlug(cfg.name)) + " · ny forside";
   $("result-meta").textContent = `${cfg.name} · ${kind.noun} i ${cfg.city}`;
   $("result").hidden = false;
   renderFixes(built.checks);
