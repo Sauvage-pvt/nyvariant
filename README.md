@@ -25,6 +25,17 @@ Gå til [http://localhost:8080](http://localhost:8080).
 - `src/worker.js` — Cloudflare Worker: statiske filer, `POST /api/carousel`, `GET /api/carousel/:slug`
 - `wrangler.toml` — Worker-konfig og KV-binding `CAROUSELS`
 
+## Forhåndsutfylling av kundesiden fra en annen lenke
+
+`kunde.html` leser `kind`, `name`, `city`, `address`, `phone`, `email`, `services`,
+`bookingUrl`, `reviewUrl`, `siteUrl` og `openDays` (kommaseparert, f.eks. `1,2,3,4,5`) fra
+URL-en og forhåndsutfyller formen — den bygger aldri siden automatisk. Eksempel, fra en
+"Lag ny forside også"-knapp i Hookfabrikken:
+
+```
+kunde.html?name=Fjellsport+AS&kind=handverker&city=Steinkjer&services=Snekring
+```
+
 ## Cloudflare
 
 Verktøyet kjører som en Worker med statiske filer fra repoet.

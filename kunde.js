@@ -52,6 +52,34 @@ $("days").innerHTML = DAYS.map(
   (d) => `<label><input type="checkbox" value="${d.n}" /> ${d.no.slice(0, 3)}</label>`
 ).join("");
 
+// Forhåndsutfylling fra en lenke, f.eks. en "Lag ny forside også"-knapp i Hookfabrikken:
+// kunde.html?name=Fjellsport+AS&kind=handverker&city=Steinkjer&services=Snekring
+// Kjente feltnavn er de samme som i readForm() nedenfor. Ukjente/manglende felt lar
+// bruker fylle inn selv — vi bygger ALDRI siden automatisk herfra, bare forhåndsutfyller.
+function fraLenke() {
+  const q = new URLSearchParams(location.search);
+  if (![...q.keys()].length) return null;
+  const g = (k) => (q.get(k) || "").trim();
+  const dager = g("openDays");
+  return {
+    siteUrl: g("siteUrl"),
+    name: g("name"),
+    kind: KINDS[g("kind")] ? g("kind") : "annet",
+    city: g("city"),
+    address: g("address"),
+    phone: g("phone"),
+    email: g("email"),
+    openDays: dager
+      ? dager.split(",").map(Number).filter((n) => !Number.isNaN(n))
+      : DEMO.openDays,
+    opens: g("opens") || DEMO.opens,
+    closes: g("closes") || DEMO.closes,
+    services: g("services"),
+    bookingUrl: g("bookingUrl"),
+    reviewUrl: g("reviewUrl"),
+  };
+}
+
 function fillForm(v) {
   $("siteUrl").value = v.siteUrl;
   $("name").value = v.name;
@@ -68,6 +96,12 @@ function fillForm(v) {
   document.querySelectorAll("#days input").forEach((i) => {
     i.checked = v.openDays.includes(Number(i.value));
   });
+}
+
+const forhandsutfylt = fraLenke();
+if (forhandsutfylt) {
+  fillForm(forhandsutfylt);
+  if (forhandsutfylt.name) setStatus("Forhåndsutfylt fra lenken. Sjekk feltene og trykk «Bygg ny versjon».");
 }
 
 $("fill-demo").addEventListener("click", () => {
